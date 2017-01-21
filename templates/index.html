@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+	<title>pyWDBMS</title>
+	<meta charset="utf-8">
+	<script
+ 		src="https://code.jquery.com/jquery-3.1.1.min.js"
+  		integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  		crossorigin="anonymous">	
+  	</script>
+  	<script
+  		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">
+  	</script>
+  	<script
+  		src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  		crossorigin="anonymous">
+  	</script>
+
+  	<link
+  		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+  		rel="stylesheet"
+  		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+  		crossorigin="anonymous">
+  	<link
+  		rel="stylesheet"
+  	    type="text/css"
+  	    href="/static/css/style.css">
+  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+</head>
+<body>
+	<div class="container-fluid nm np">
+		<div class="col-md-12 np nm">
+			<nav class="navbar navbar-light nm">
+				<a class="navbar-brand" href="/servers">pyWDBMS</a>
+				<ul class="nav navbar-nav" id="navbarServers">
+				</ul>
+			</nav>
+		</div>
+		<div class="col-md-2 sidebar inspect">
+			<div class="col-md-12 create-connection">
+				<button type="button"
+						class="btn btn-danger"
+						id = "toggleServerAddModal"
+						data-toggle="modal"
+						data-target="#modalBox"
+						data-connect-properties>
+						Create connection
+				</button>
+			</div>
+			<div class="col-md-12">
+				<ul class="nav nav-sidebar">
+			 		<li>
+			 			<a href="#">One</a>
+			 		</li>
+				 	<li>
+				 		<a href="#">Two</a>
+				 	</li>
+				 	<li>
+				 		<a href="#">Three</a>
+				 	</li>
+				 	<li>
+				 		<a href="#">Four</a>
+				 	</li>
+				 	<li>
+				 		<a href="#">Five</a>
+				 	</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-10 col-md-offset-2 main inspect">
+			<div class="col-md-12 sql-bar" id="sqlBar">
+				<p>Beauty sql here</p>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="modalBox" tabindex="-1" role="dialog" aria-labelledby="modal-box-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="modalTitle">Create connection</h4>
+				</div>
+				<div class="modal-body" id="modalBody"></div>
+			</div>
+		</div>
+	</div>
+<script src="/static/js/app.js"></script>
+</body>
+
+</html>

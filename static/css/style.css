@@ -1,0 +1,46 @@
+* {
+  border-radius: 0 !important;
+}
+.np{
+	padding:0 !important
+}
+.nm{
+	margin:0 !important
+}
+.navbar-brand {
+	font-size: 30px !important
+}
+.nav-item {
+	font-size: 20px !important
+}
+.navbar-nav{
+	margin-left:130px
+}
+.inspect {
+	border:solid
+}
+.sidebar {
+	top: 52px;
+	bottom: 0;
+	left: 0;
+	position:fixed;
+	z-index: 1000;
+	display: block;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+	.create-connection{
+		text-align: center
+	}
+.main{
+	padding:15px
+}
+	.sql-bar{
+		background: black;
+	}
+		.sql-bar p{
+			color:white;
+			padding:8px;
+			margin:0;
+			font-size:15px;
+		}

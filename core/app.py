@@ -7,8 +7,10 @@ from pywdbms.core.database import db_session
 from pywdbms.core.models import Server
 from pywdbms.utils.db_utils import exists_row
 from pywdbms.utils.view_utils import api_response
-blueprint = Blueprint('blueprint', __name__, template_folder="../templates")
+from pywdbms.core.registers import SessionRegistry
 
+blueprint = Blueprint('blueprint', __name__, template_folder="../templates")
+registry = SessionRegistry()
 
 @blueprint.route('/')
 def main():

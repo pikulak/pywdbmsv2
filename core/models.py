@@ -6,7 +6,6 @@ class Server(Base):
 	id = Column(Integer, primary_key=True)
 	host = Column(String(15), unique=True)
 	port = Column(Integer)
-	database = Column(String(50))
-	user = Column(String(30))
+	username = Column(String(30))
 	password = Column(String(50))
 	drivername = Column(String(20))

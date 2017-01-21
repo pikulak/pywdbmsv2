@@ -1,9 +1,9 @@
+
 function apiCall(method, path, params, cb){
 	var timeout = 300000;
-
 	$.ajax({
 		timeout: timeout,
-		url: 'api' + path,
+		url: '/api' + path,
 		method: method,
 		cache: false,
 		data: params,
@@ -16,11 +16,16 @@ function apiCall(method, path, params, cb){
 		}
 	})
 }
-
+function changeUrl(page, url){
+	if (typeof (history.pushState) != 'undefined'){
+		var obj = {Page: page, Url: url}
+		history.pushState(obj, obj.Page, obj.Url)
+	}
+}
 function addServer(params, callback)    { apiCall('POST', '/servers/', params, callback) }
-function deleteServer(server, callback) { apiCall('DELETE', '/servers/${server}', {}, callback) }
+function deleteServer(server, callback) { apiCall('DELETE', `/servers/${server}`, {}, callback) }
 function getServers(callback)           { apiCall('GET', '/servers/', {}, callback) }
-function getDatabases(server, callback) { apiCall('GET', '/servers/${server}/databases/', {}, callback) }
+function getDatabases(server, callback) { apiCall('GET', `/servers/${server}/databases/`, {}, callback) }
 
 function buildServerModal(event){
 	var modalTitle = $('#modalTitle')
@@ -36,8 +41,6 @@ function buildServerModal(event){
 		<input type='text' class='form-control' id='host' name='host'>
 		<label for='port'>port:</label>
 		<input type='text' class='form-control' id='port' name='port'>
-		<label for='database'>database:</label>
-		<input type='text' class='form-control' id='database' name='database'>
 		<label for='username'>username:</label>
 		<input type='text' class='form-control' id='username' name='username'>
 		<label for='password'>password:</label>
@@ -65,7 +68,7 @@ function handleAddServerForm(event){
 	event.preventDefault()
 }
 
-function showServerNavbar(event){
+function fillServerNavbar(event){
 	var navbar = $('#navbarServers')
 	var itemsHTML = ''
 	getServers(data =>{
@@ -83,8 +86,39 @@ function showServerNavbar(event){
 	})
 }
 
+function fillSidebar(event){
+	if (currentServer.length > 0){
+		var sidebar = $('#navSidebar')
+		var itemsHTML = ''
+		getDatabases(currentServer, data =>{
+			data = data[0]
+			if (data.status == 'success'){
+				var databases = data.data
+				databases.forEach(database =>{
+					itemsHTML += `
+					<li>
+				 		<a href="/servers/${currentServer}/databases/${database}/">${database}</a>
+				 	</li>`
+				})
+			}
+			sidebar.html(itemsHTML)
+		})
+	}
+}
+
+function serverOnClick(event){
+	var navItem = $('.nav-link')
+	var url = navItem.attr('href')
+	currentServer = navItem.html()
+	changeUrl('', url)
+	fillSidebar()
+	event.preventDefault()
+}
+
 $('#toggleServerAddModal').bind('click', buildServerModal)
 $('#modalBody').bind('submit', '#addServerForm', handleAddServerForm)
+$('#navbarServers').bind('click', '.nav-link', serverOnClick)
 $(() => {
-	showServerNavbar() 
+	fillServerNavbar()
+	fillSidebar()
 })

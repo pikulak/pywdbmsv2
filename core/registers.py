@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, session_maker
+from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.engine import url
 from sqlalchemy.pool import NullPool
 
@@ -11,11 +11,20 @@ class SessionRegistry(object):
 
 	def get(self, host, **kwargs):
 		if host not in self._registry:
-			server_params = Server.query.filter_by(host=host)
-			_url = url.URL(**server_params)
+			try:
+				server_params = Server.query.filter_by(host=host).all()[0]
+			except IndexError:
+				return False
+				
+			prepare_url = {'host': server_params.host,
+						   'port': server_params.port,
+						   'username': server_params.username,
+						   'drivername': server_params.drivername,
+						   'password': server_params.password}
+			_url = url.URL(**prepare_url)
 			engine = create_engine(_url, poolclass=NullPool, **kwargs)
-			Session = session_maker(bind=engine)
+			Session = sessionmaker(bind=engine)
 			session = scoped_session(Session)
-			self._[host] = session
-		return self._registry[url]
+			self._registry[host] = session
+		return self._registry[host]
 

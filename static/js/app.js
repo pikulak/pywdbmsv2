@@ -107,14 +107,21 @@ function fillSidebar(event){
 }
 
 function serverOnClick(event){
-	var navItem = $('.nav-link')
-	var url = navItem.attr('href')
-	currentServer = navItem.html()
-	changeUrl('', url)
 	fillSidebar()
-	event.preventDefault()
 }
-
+$('#sidebarTree').fancytree({
+	clickFolderMode: 4,
+	focusOnSelect: true,
+	keyboard: false,
+	source: [
+    {title: "Node 1", key: "1"},
+    {title: "Folder 2", key: "2", folder: true, children: [
+      {title: "Node 2.1", key: "3"},
+      {title: "Node 2.2", key: "4"}
+    ]}
+  ]
+    }
+)
 $('#toggleServerAddModal').bind('click', buildServerModal)
 $('#modalBody').bind('submit', '#addServerForm', handleAddServerForm)
 $('#navbarServers').bind('click', '.nav-link', serverOnClick)

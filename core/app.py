@@ -7,25 +7,11 @@ from sqlalchemy import inspect
 from pywdbms.core.database import db_session
 from pywdbms.core.models import Server
 from pywdbms.utils.db_utils import exists_row
-from pywdbms.utils.view_utils import api_response
+from pywdbms.utils.view_utils import api_response, parse_url
 from pywdbms.core.registers import SessionRegistry
 
 blueprint = Blueprint('blueprint', __name__, template_folder="../templates")
 registry = SessionRegistry()
-
-@blueprint.route('/', defaults={'path':''})
-@blueprint.route('/<path:path>')
-def main(path):
-    path = path.split('/')
-    try:
-        server_ip = path[1]
-        if not exists_row(db_session, Server, "host", server_ip):
-            return abort(404)
-    except IndexError:
-        server_ip = ''
-    return make_response(render_template(
-                        'index.html',
-                        server_ip=server_ip), 200)
 
 @blueprint.route('/api/servers/', methods=['POST'])
 def add_server():
@@ -70,7 +56,7 @@ def get_servers():
         else:
             return api_response(400, "error", "Servers doesn't exists.")
 
-@blueprint.route('/api/servers/<string:server>/databases/', methods=['GET', 'POST'])
+@blueprint.route('/api/servers/<string:server>/databases/', methods=['GET'])
 def get_databases(server):
     session = registry.get(server)
     if session:
@@ -80,3 +66,11 @@ def get_databases(server):
             databases.append(database[0])
         return api_response(200, "success", "Success! Returning server's databases.", databases)
     return api_response(404, "error", "Couldn't get session.")
+
+@blueprint.route('/<path:path>')
+def main(path):
+    current_object = parse_url(path)
+    print(current_object)
+    return make_response(render_template(
+                        'index.html',
+                        current_object=current_object), 200)

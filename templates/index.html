@@ -15,17 +15,24 @@
   		integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   		crossorigin="anonymous">
   	</script>
-
+  	<script
+  		src="/static/js/jquery.fancytree-all.min.js">	
+  	</script>
   	<link
   		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
   		rel="stylesheet"
   		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
   		crossorigin="anonymous">
+  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
   	<link
   		rel="stylesheet"
   	    type="text/css"
   	    href="/static/css/style.css">
-  	<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+  	<link
+  		rel="stylesheet"
+  	    type="text/css"
+  	    href="/static/css/ui.fancytree.css">
+
 </head>
 <body>
 	<div class="container-fluid nm np">
@@ -48,7 +55,7 @@
 				</button>
 			</div>
 			<div class="col-md-12">
-				<ul class="nav nav-sidebar" id="navSidebar"></ul>
+				<div id="sidebarTree"></div>
 			</div>
 		</div>
 		<div class="col-md-10 col-md-offset-2 main inspect">
@@ -68,7 +75,9 @@
 		</div>
 	</div>
 <script>
-	var currentServer = '{{ server_ip }}'
+	var currentServer = '{{ current_object.server }}'
+	var currentDatabase = '{{ current_object.database }}'
+	var currentTable = '{{ current_object.table }}'
 </script>
 <script src="/static/js/app.js"></script>
 </body>
